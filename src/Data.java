@@ -4,7 +4,7 @@ public class Data {
 	private byte         data;
 	private int    quantidade;
 	private double percentual;
-	private Node          noh;
+	private Node          noh = null;
 
 	public void setNoh(Node noh) {
 		this.noh = noh;

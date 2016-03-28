@@ -4,6 +4,19 @@ public class Node {
 	private Node esquerda;
 	private Node  direita;
 	private byte     data;
+	
+	public Node (Node esquerda, Node direita)
+	{
+		this.esquerda = esquerda;
+		this.direita  = direita;
+	}
+	
+	public Node (Node esquerda, Node direita, byte data)
+	{
+		this.esquerda = esquerda;
+		this.direita  = direita;
+		this.data     = data;
+	}
 
 	public Node getEsquerda() {
 		return esquerda;

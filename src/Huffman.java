@@ -27,9 +27,28 @@ public class Huffman {
 		int[] par = getPar();
 		do 
 		{
+			Node esq = null;
+			Node dir = null;
 			
-		
-			//Data d = new Data(this);
+			Data d1 = this.data.remove(par[0]);
+			Data d2 = this.data.remove(par[1]);
+
+			// Verifica se é folha (menor)
+			if (d1.getNoh() == null)
+			{
+				esq = new Node(null, null, d1.getData()); 
+			}
+			
+			if (d2.getNoh() == null)
+			{
+				dir = new Node(null, null, d2.getData()); 
+			}
+
+			Node pai = new Node(esq, dir);
+			
+			Data d = new Data(esq.getData(), -1, d1.getPercentual() + d2.getPercentual());
+			this.data.addElement(d);
+			
 		}while(par != null);
 	}
 	
