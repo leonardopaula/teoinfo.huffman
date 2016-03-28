@@ -30,8 +30,11 @@ public class Huffman {
 			Node esq = null;
 			Node dir = null;
 			
-			Data d1 = this.data.remove(par[0]);
-			Data d2 = this.data.remove(par[1]);
+			Data d1 = this.data.elementAt(par[0]);
+			Data d2 = this.data.elementAt(par[1]);
+			
+			this.data.remove(par[0]);
+			this.data.remove(par[1]);
 
 			// Verifica se é folha (menor)
 			if (d1.getNoh() == null)
@@ -46,7 +49,7 @@ public class Huffman {
 
 			Node pai = new Node(esq, dir);
 			
-			Data d = new Data(esq.getData(), -1, d1.getPercentual() + d2.getPercentual());
+			Data d = new Data(esq.getData(), -1, d1.getPercentual() + d2.getPercentual(), pai);
 			this.data.addElement(d);
 			
 		}while(par != null);
