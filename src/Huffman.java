@@ -24,27 +24,35 @@ public class Huffman {
 	
 	public void montaArvore()
 	{
-		int[] par = getPar();
+		Data[] par = null;
 		do 
 		{
+			par = this.getPar();
+
+			if (par == null) return;
+
 			Node esq = null;
 			Node dir = null;
-			
-			Data d1 = this.data.elementAt(par[0]);
-			Data d2 = this.data.elementAt(par[1]);
-			
-			this.data.remove(par[0]);
-			this.data.remove(par[1]);
+
+			Data d1 = par[0];// não precisa mais disso
+			Data d2 = par[1];// Nem disso
+
+			//this.data.remove(par[0]);
+			//this.data.remove(par[1]);
 
 			// Verifica se é folha (menor)
 			if (d1.getNoh() == null)
 			{
 				esq = new Node(null, null, d1.getData()); 
+			} else {
+				esq = new Node(d1.getNoh(), null, d1.getData());
 			}
-			
+
 			if (d2.getNoh() == null)
 			{
 				dir = new Node(null, null, d2.getData()); 
+			} else {
+				dir = new Node(null, d1.getNoh(), d1.getData());
 			}
 
 			Node pai = new Node(esq, dir);
@@ -55,16 +63,22 @@ public class Huffman {
 		}while(par != null);
 	}
 	
-	public int[] getPar()
+	public Data[] getPar()
 	{
-		int[] ret = new int[2];
-		
-		ret[0] = getMenor(-1);
-		ret[1] = getMenor(ret[0]);
+		Data[] ret = new Data[2];
+
+		if (ret[0] == null) return null;
+
+		ret[0] = this.data.remove(getMenor(-1));
+		ret[1] = this.data.remove(getMenor(-1));
 
 		return ret;
 	}
 	
+	/*
+	 * Removendo o índice não precisa mais o except.
+	 * Alcool.
+	 * */
 	public int getMenor(int except)
 	{
 		int menor;
