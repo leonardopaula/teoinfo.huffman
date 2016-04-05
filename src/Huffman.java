@@ -1,3 +1,5 @@
+import java.nio.ByteBuffer;
+import java.util.BitSet;
 import java.util.Vector;
 
 public class Huffman{
@@ -68,6 +70,33 @@ public class Huffman{
 		// Caminha para direita - 1
 		compacta(s, n.getDir(), compactado+'1');
 	}
+	/*
+	public byte[] compacta1(No raiz)
+	{
+		byte[] s = new byte[256]; // Tabela com os bytes do arquivo (Posição ascii)
+		byte[] b = new byte[8];   // Temporária com o caminhamento - binário, representação do arquivo
+
+		compacta1(s, raiz, b);
+		
+		return s;
+	}
+	
+	public void compacta1(byte[] s, No n, byte compactado)
+	{
+		if (n.getEsq() == null && n.getDir() == null)
+		{
+			s[n.getData()] = compactado;
+			
+			// Sai da recursão
+			return;
+		}
+
+		// Caminha para esquerda - 0
+		compacta1(s, n.getEsq(), compactado.put((byte) 0));
+		
+		// Caminha para direita - 1
+		compacta1(s, n.getDir(), compactado.put((byte) 1));
+	}*/
 
 	public int menorFrequencia(Vector<No> v)
 	{
