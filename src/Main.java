@@ -17,7 +17,7 @@ public class Main {
 		Huffman huf = new Huffman();
 		
 		// Caminho do arquivo a ser lido
-		String file = "/home/leonardo/workspace/Huffman/Util/arquivo.txt";
+		String file = "/home/leonardo/workspace/Huffman/Util/lore.txt";
 		
 		try {
 			Path p    = FileSystems.getDefault().getPath("", file);
@@ -33,11 +33,9 @@ public class Main {
 			No arvoreHuffman = huf.montaArvore(frequencias);
 			
 			FileOutputStream fos = new FileOutputStream("/home/leonardo/workspace/Huffman/Util/arquivo.ilm");
-			//byte[] s = huf.compacta1(arvoreHuffman);
 			String[] s = huf.compacta(arvoreHuffman);
-			BitSet bs;
+
 			int contador = 0;
-			bs = new BitSet( 8 );
 			int pool = 0;
 
 			for (int i = 0; i < fb.length; i++)
@@ -52,21 +50,15 @@ public class Main {
 					if (s[fb[i] & 0xff].charAt(j) == '1') 
 					{
 						pool |= 1;
-						bs.set(j, true);
-					} else { 
-						bs.set(j, false);
-					}
+					} 
 					
 					contador += 1;
 					//http://introcs.cs.princeton.edu/java/stdlib/BinaryOut.java.html
 					if (contador == 8)
 					{
-						//byte[] ret = bs.toByteArray();
 						fos.write( pool );
 						contador = 0;
 						pool = 0;
-						bs.clear();
-						
 					}
 				}
 
@@ -76,10 +68,8 @@ public class Main {
 			if (contador > 0)
 			{
 				pool <<= (8-contador);
-				byte[] ret = bs.toByteArray();
-				fos.write( ret );
+				fos.write( pool );
 				contador = 0;
-				bs.clear();
 			}
 
 			
