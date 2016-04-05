@@ -2,9 +2,16 @@ import java.util.Vector;
 
 public class Huffman{
 
+	// Adicionado para caminhamento
+	private int[] frequencia      = null;
+	private byte[] codigo_huffman = null;
+
 	// Array indexado pelo código ASCII (https://rosettacode.org/wiki/Huffman_coding)
 	public No montaArvore(int[] frequencia)
 	{
+		
+		this.frequencia = frequencia;
+		
 		Vector<No> arvore = new Vector<No>();
 		for (int i = 0; i < frequencia.length; i++ )
 		{
@@ -35,18 +42,21 @@ public class Huffman{
 		return arvore.elementAt(this.menorFrequencia(arvore));
 	}
 	
-	public StringBuffer compacta(No raiz, StringBuffer arquivo)
+	// Retornar um array com os códigos por ASCII na chave (igual da frequencia)
+	public String[] compacta(No raiz)
 	{
-		compacta(arquivo, raiz, "");
+		String[] s = new String[256];
+
+		compacta(s, raiz, "");
 		
-		return arquivo;
+		return s;
 	}
 	
-	public void compacta(StringBuffer s, No n, String compactado)
+	public void compacta(String[] s, No n, String compactado)
 	{
 		if (n.getEsq() == null && n.getDir() == null)
 		{
-			//s[n.getAscii_code()] = compactado;
+			s[n.getData()] = compactado;
 			
 			// Sai da recursão
 			return;
@@ -58,8 +68,7 @@ public class Huffman{
 		// Caminha para direita - 1
 		compacta(s, n.getDir(), compactado+'1');
 	}
-	
-	
+
 	public int menorFrequencia(Vector<No> v)
 	{
 		int menor = 0;

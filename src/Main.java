@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,13 +16,12 @@ public class Main {
 		Huffman huf = new Huffman();
 		
 		// Caminho do arquivo a ser lido
-		String file = "/home/leonardo/workspace/Huff/Util/arquivo.txt";
+		String file = "/home/leonardo/workspace/Huffman/Util/face-frontal-cow_318-74529.png";
 		
 		try {
 			Path p    = FileSystems.getDefault().getPath("", file);
 			byte[] fb = Files.readAllBytes(p);
-			StringBuffer arquivo = new StringBuffer();
-			arquivo.append(new String (fb));
+			StandardCharsets.UTF_8.decode(ByteBuffer.wrap(fb)).toString();
 			
 			for (byte fl : fb)
 			{
@@ -31,7 +32,12 @@ public class Main {
 			// Constrói árvore para compactar
 			No arvoreHuffman = huf.montaArvore(frequencias);
 			
-			StringBuffer s = huf.compacta(arvoreHuffman, arquivo);
+			String[] s = huf.compacta(arvoreHuffman);
+			for (int i = 0; i < fb.length; i++)
+			{
+				System.out.println(fb[i] + " -> " + s[fb[i]]);
+			}
+
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
