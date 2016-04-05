@@ -1,6 +1,5 @@
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,17 +15,16 @@ public class Main {
 		Huffman huf = new Huffman();
 		
 		// Caminho do arquivo a ser lido
-		String file = "/home/leonardo/workspace/Huffman/Util/face-frontal-cow_318-74529.png";
+		String file = "/home/leonardo/workspace/Huffman/Util/artificial-planta.jpg";
 		
 		try {
 			Path p    = FileSystems.getDefault().getPath("", file);
 			byte[] fb = Files.readAllBytes(p);
-			StandardCharsets.UTF_8.decode(ByteBuffer.wrap(fb)).toString();
 			
 			for (byte fl : fb)
 			{
 				// Adiciona no array de frequencias, utilizando o código ASCII como chave
-				frequencias[ fl ] += 1; 
+				frequencias[ fl & 0xff ] += 1; 
 			}
 			
 			// Constrói árvore para compactar
@@ -35,7 +33,7 @@ public class Main {
 			String[] s = huf.compacta(arvoreHuffman);
 			for (int i = 0; i < fb.length; i++)
 			{
-				System.out.println(fb[i] + " -> " + s[fb[i]]);
+				//fos.write(s[fb[i] & 0xff]);
 			}
 
 			
