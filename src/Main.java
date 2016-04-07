@@ -1,10 +1,10 @@
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.BitSet;
 
 public class Main {
 
@@ -17,7 +17,7 @@ public class Main {
 		Huffman huf = new Huffman();
 		
 		// Caminho do arquivo a ser lido
-		String file = "/home/leonardo/workspace/Huffman/Util/lore.txt";
+		String file = "/home/leonardo/workspace/Huffman/Util/arquivo.txt";
 		
 		try {
 			Path p    = FileSystems.getDefault().getPath("", file);
@@ -71,7 +71,27 @@ public class Main {
 				fos.write( pool );
 				contador = 0;
 			}
-
+			
+			fos.close();
+			
+			File f = new File("/home/leonardo/workspace/Huffman/Util/arquivo.ilm");
+			FileInputStream fis = new FileInputStream(f);
+			byte[] buffer = new byte[(int)f.length()];
+			fis.read(buffer);
+			System.out.println("\n");
+			for (int i = 0; i < buffer.length; i++) 
+			{
+				System.out.println(buffer[i]  & 0xff);
+		       	/*for (int j = 0; j < 8; j++)
+		       	{
+		       		if ((buffer[i] & 1) == 1)
+		       			System.out.print("1");
+		       		else System.out.print("0");
+		       		buffer[i] >>=1;
+		       	}*/
+			}
+			
+			fis.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
