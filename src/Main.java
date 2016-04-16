@@ -1,3 +1,4 @@
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -5,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.BitSet;
 
 public class Main {
 
@@ -76,22 +78,49 @@ public class Main {
 			
 			File f = new File("/home/leonardo/workspace/Huffman/Util/arquivo.ilm");
 			FileInputStream fis = new FileInputStream(f);
+			BufferedInputStream in = new BufferedInputStream(fis);
+			contador = 0;
+			int buffer = 0;
+			System.out.println("");
+			do {
+				if (contador == 0)
+				{
+					buffer   = in.read();
+					contador = 8;
+				}
+				
+				if (buffer > 0)
+				{
+					contador--;
+					boolean bit = ((buffer >> contador) & 1) == 1;
+					if (bit) System.out.print("1"); else System.out.print("0");
+				}
+				
+			}while(buffer > 0);
+			
+			/*
+			FileInputStream fis = new FileInputStream(f);
+
 			byte[] buffer = new byte[(int)f.length()];
 			fis.read(buffer);
 			System.out.println("\n");
+			BitSet bs = new BitSet();
+
 			for (int i = 0; i < buffer.length; i++) 
 			{
-				System.out.println(buffer[i]  & 0xff);
-		       	/*for (int j = 0; j < 8; j++)
+				System.out.println(buffer[i] & 0xff);
+		       	for (int j = 0; j < 8; j++)
 		       	{
+		       		boolean bit = ((buffer >> n) & 1) == 1;
 		       		if ((buffer[i] & 1) == 1)
 		       			System.out.print("1");
 		       		else System.out.print("0");
 		       		buffer[i] >>=1;
-		       	}*/
+		       	}
+		       	System.out.println("");
 			}
 			
-			fis.close();
+			fis.close();*/
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
