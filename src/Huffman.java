@@ -1,5 +1,7 @@
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 import java.util.Vector;
 
 public class Huffman{
@@ -70,33 +72,6 @@ public class Huffman{
 		// Caminha para direita - 1
 		compacta(s, n.getDir(), compactado+'1');
 	}
-	/*
-	public byte[] compacta1(No raiz)
-	{
-		byte[] s = new byte[256]; // Tabela com os bytes do arquivo (Posição ascii)
-		byte[] b = new byte[8];   // Temporária com o caminhamento - binário, representação do arquivo
-
-		compacta1(s, raiz, b);
-		
-		return s;
-	}
-	
-	public void compacta1(byte[] s, No n, byte compactado)
-	{
-		if (n.getEsq() == null && n.getDir() == null)
-		{
-			s[n.getData()] = compactado;
-			
-			// Sai da recursão
-			return;
-		}
-
-		// Caminha para esquerda - 0
-		compacta1(s, n.getEsq(), compactado.put((byte) 0));
-		
-		// Caminha para direita - 1
-		compacta1(s, n.getDir(), compactado.put((byte) 1));
-	}*/
 
 	public int menorFrequencia(Vector<No> v)
 	{
@@ -111,6 +86,44 @@ public class Huffman{
 		}
 		
 		return menor;
+	}
+	
+	public List<Integer> descompacta(No raiz, String entrada, int padding)
+	{
+		List<Integer> bbf = new ArrayList<Integer>();
+
+		No no = raiz;
+		String pool = "";
+
+		//System.out.println(entrada);System.exit(0);
+		for (int i = 0; i < entrada.length()+1; i++)
+		{
+			// Procura na árvore
+			if (no.getEsq() == null && no.getDir() == null)
+			{
+				bbf.add(new Integer(no.getData()));
+				//System.out.println("Achou: " + no.getData() + " " + pool);
+				no = raiz;
+				pool = "";
+				
+			}
+			
+			if (entrada.length() - padding <= i+1) 
+				break;
+
+			pool = pool + "" + entrada.charAt(i); 
+
+			// Caminha para esquerda
+			if (entrada.charAt(i) == '0')
+			{
+				no = no.getEsq();
+			} else {
+				no = no.getDir();
+			}
+		}
+		
+		//System.out.println(bbf);
+		return bbf;
 	}
 
 }
