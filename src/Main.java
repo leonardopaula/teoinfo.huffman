@@ -20,7 +20,7 @@ public class Main {
 		Huffman huf = new Huffman();
 		
 		// Caminho do arquivo a ser lido
-		String file = "/home/leonardo/workspace/Huffman/Util/imgMINI1.jpg";
+		String file = "/home/leonardo/workspace/Huffman/Util/face-frontal-cow_318-74529.png";
 		
 		// Padding byte
 		int padding = 0;
@@ -36,7 +36,7 @@ public class Main {
 				//System.out.print((fl & 0xff) + ", ");
 			}
 			
-			System.out.println("");
+			//System.out.println("");
 			// Constrói árvore para compactar
 			No arvoreHuffman = huf.montaArvore(frequencias);
 			
@@ -49,8 +49,9 @@ public class Main {
 			for (int i = 0; i < fb.length; i++)
 			{
 				//System.out.println(fb[i] + " -> " + s[fb[i] & 0xff] + " : ");
-				//System.out.println(s[fb[i] & 0xff]);
+				//System.out.print(s[fb[i] & 0xff]);
 				//System.out.println(s[fb[i] & 0xff] + " = " + (fb[i] & 0xff));
+
 				for(int j = 0; j < s[fb[i] & 0xff].length(); j++)
 				{
 					pool <<= 1;
@@ -87,6 +88,7 @@ public class Main {
 			File f = new File("/home/leonardo/workspace/Huffman/Util/arquivo.ilm");
 			FileInputStream fis = new FileInputStream(f);
 			BufferedInputStream in = new BufferedInputStream(fis);
+			int total = 0;
 			contador   = 0;
 			int buffer = 0;
 			StringBuilder sb = new StringBuilder();
@@ -94,11 +96,13 @@ public class Main {
 			do {
 				if (contador == 0)
 				{
+					total++;
 					buffer   = in.read();
+					//System.out.println(buffer);
 					contador = 8;
 				}
 				
-				if (buffer > 0)
+				if (buffer > -1)
 				{
 					contador--;
 					boolean bit = ((buffer >> contador) & 1) == 1;
@@ -106,7 +110,7 @@ public class Main {
 					sb.append((bit) ? "1" : "0");
 				}
 				
-			}while(buffer > 0);
+			}while(buffer > -1);
 
 			List<Integer> saida = huf.descompacta(arvoreHuffman, sb.toString(), padding);
 			FileOutputStream out = new FileOutputStream("/home/leonardo/workspace/Huffman/Util/saida.jpg");

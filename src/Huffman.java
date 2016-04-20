@@ -84,7 +84,6 @@ public class Huffman{
 				menor = i;
 			}
 		}
-		
 		return menor;
 	}
 	
@@ -96,7 +95,7 @@ public class Huffman{
 		String pool = "";
 
 		//System.out.println(entrada);System.exit(0);
-		for (int i = 0; i < entrada.length()+1; i++)
+		for (int i = 0; i < entrada.length()+8; i++)
 		{
 			// Procura na árvore
 			if (no.getEsq() == null && no.getDir() == null)
