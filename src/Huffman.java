@@ -87,6 +87,50 @@ public class Huffman{
 		return menor;
 	}
 	
+	public int[] frequenciaRefatorada(int[] freq)
+	{
+		int[] retorno = new int[256]; 
+		
+		int menor = 0;
+		int valor = 1;
+		for(int i = 0; i < freq.length; i++)
+		{
+			menor = this.menorFrequencia(freq);
+			if (menor < 0) break; // Todas frequencias percorridas
+			freq[menor] = 0;
+			retorno[menor] = valor++;
+				
+			System.out.println("menor = " + menor + " - Freq: " + freq[menor] + " - Nova: " + valor);
+		}
+
+		return retorno;
+	}
+	
+	public int menorFrequencia(int[] freq)
+	{
+		int menor = -1;
+		
+		for (int i = 0; i < freq.length; i++)
+		{
+			if (freq[i] > 0)
+			{
+				System.out.println("?" + freq[i]);
+				if (menor >= 0)
+				{
+					if (freq[i] < freq[menor])
+					{
+						menor = i;
+					}
+				} else {
+					menor = i;
+				}
+				
+			}
+		}
+
+		return menor;
+	}
+	
 	public List<Integer> descompacta(No raiz, String entrada, int padding)
 	{
 		List<Integer> bbf = new ArrayList<Integer>();
@@ -107,7 +151,7 @@ public class Huffman{
 				
 			}
 			
-			if (entrada.length() - padding <= i+1) 
+			if ((entrada.length()-7) - padding <= i+1) 
 				break;
 
 			pool = pool + "" + entrada.charAt(i); 
